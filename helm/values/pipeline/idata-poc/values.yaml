@@ -1,0 +1,163 @@
+# Default values for pipeline.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: 116279234263.dkr.ecr.us-east-1.amazonaws.com/pipelineserver
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "67e648be550b4823ed782c04cc4608bc0e762d3b"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext:
+  {}
+  # fsGroup: 2000
+
+securityContext:
+  {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: pipeline.poc.idatadev.cloud
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+    cpu: 2
+    memory: 1536Mi
+  requests:
+    cpu: 2
+    memory: 1536Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+env:
+  javaOpts: -Xms512m -Xmx1G
+  spring:
+    profile: docker
+    config:
+      location: "file:/usr/src/pipelineserver/config/ext-properties.yaml"
+
+configmap:
+  springboot:
+    applicationProperties:
+      spring:
+        servlet:
+          multipart:
+            max-file-size: 1GB
+            max-request-size: 1GB
+        server:
+          tomcat:
+            connection-timeout: "600000"
+        management:
+          health:
+            probes:
+              enabled: "true"
+            livenessState:
+              enabled: "true"
+            readinessState:
+              enabled: "true"
+      environment: idata-poc
+      schedule:
+        checkFileNotifierQueue: "5000"
+        checkNotificationQueue: "5000"
+        checkStagingNotifierQueue: "60000"
+        checkTriggerRunDateExpressions: "60000"
+        findSparkJobsToStart: "5000"
+      api:
+        maxReturnDataSize: "52428800"
+      sparkProperties:
+        sparkMemoryCores:
+          small:
+            maxFileSize: 100m
+            sparkExecutorMemory: 8g
+            sparkExecutorCores: "1"
+            sparkNumExecutors: "1"
+            sparkDriverMemory: 5g
+          medium:
+            maxFileSize: 1g
+            sparkExecutorMemory: 32g
+            sparkExecutorCores: "1"
+            sparkNumExecutors: "1"
+            sparkDriverMemory: 10g
+          large:
+            sparkExecutorMemory: 64g
+            sparkExecutorCores: "1"
+            sparkNumExecutors: "1"
+            sparkDriverMemory: 16g
+      aws:
+        region: us-east-1
+        marketplace:
+          productCode: na
+          dimension: na
+          meteringAPICallInterval: "3600000"
+        s3:
+          rawPlusBucketSuffix: raw-plus
+        secretsManager:
+          apiKeysSecretName: my-apikeys
+          redshiftSecretName: na
+          snowflakeSecretName: na
+        elasticMapReduce:
+          eksemr:
+            enabled: "true"
+            virtualClusterId: sj8cglme516ybninpte34zvo1
+            executionRoleArn: arn:aws:iam::116279234263:role/EMRContainers-JobExecutionRole
+            releaseLabel: emr-6.3.0-latest
+            configurationFileUrl: s3://idata-poc-config/spark/emr-config.json
+            cloudwatchLogGroupName: /eks-emr-logs/poc
+            logUri: s3://idata-poc-temp/
+          emr:
+            enabled: "false"
