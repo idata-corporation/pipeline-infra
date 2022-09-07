@@ -18,6 +18,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
+    # TODO - change this value to your host
     - host: ui.poc.idatadev.cloud
       paths:
         - path: /
@@ -40,6 +41,7 @@ resources:
     memory: 128Mi
 
 env:
+  # TODO - change this value to your host
   REACT_APP_API_GATEWAY_ENDPOINT: https://pipeline.poc.idatadev.cloud
   REACT_APP_COGNITO_USER_APP_CLIENT_ID: NA
   REACT_APP_COGNITO_USER_POOL_ID: NA

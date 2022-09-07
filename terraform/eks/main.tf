@@ -146,7 +146,7 @@ module "eks_managed_node_group" {
   max_size     = 3
   desired_size = 1
 
-  instance_types = ["m5.2xlarge"]
+  instance_types = ["m5.4xlarge"]
   capacity_type  = "ON_DEMAND"
 
   labels = {
