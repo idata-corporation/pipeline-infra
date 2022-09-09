@@ -155,7 +155,10 @@ configmap:
           eksemr:
             enabled: "true"
             # TODO - Change this virtual cluster ID to the EMR on EKS virtual cluster ID
-            virtualClusterId: sj8cglme516ybninpte34zvo1
+            # get emr-containers virtual-cluster-id
+            # aws emr-containers list-virtual-clusters --query "virtualClusters[?state=='RUNNING'].id" --output text
+            virtualClusterId: lf39nq0exg831vqoc7tz7894g
+            # TODO - Change this role ARN
             executionRoleArn: arn:aws:iam::116279234263:role/EMRContainers-JobExecutionRole
             releaseLabel: emr-6.3.0-latest
             configurationFileUrl: s3://idata-poc-config/spark/emr-config.json

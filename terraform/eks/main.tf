@@ -159,7 +159,7 @@ module "eks_managed_node_group" {
     max_unavailable_percentage = 50 # or set `max_unavailable`
   }
 
-  # iam_role_additional_policies = [aws_iam_policy.node_additional.arn]
+  #iam_role_additional_policies = [aws_iam_policy.node_additional.arn]
 
   tags = merge(local.tags, { Separate = "eks-managed-node-group" })
 }
@@ -201,12 +201,9 @@ module "fargate_profile" {
 #   Note: this is the route users will have to take for adding additonal security groups to nodes since there isn't a separate "security group attachment" resource
 # 2. For addtional IAM policies, users can attach the policies outside of the cluster definition as demonstrated below
 resource "aws_iam_role_policy_attachment" "additional" {
-
-   for_each = module.eks.eks_managed_node_groups
-
-   policy_arn = aws_iam_policy.node_additional.arn
-   role       = each.value.iam_role_name
- }
+  policy_arn = aws_iam_policy.node_additional.arn
+  role       = module.eks_managed_node_group.iam_role_name
+}
 
 
 ################################################################################
