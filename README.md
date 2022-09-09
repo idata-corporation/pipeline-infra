@@ -122,7 +122,7 @@ If no error, register a test dataset (stock_price)
 helm delete pipeline -n pipeline
 
 # uninstall pipeline ui
-helm delete pipeline -n pipeline
+helm delete ui -n pipeline
 
 # login to eks
 aws eks update-kubeconfig --name idata-poc
@@ -132,6 +132,9 @@ kubectl get pod -n pipeline
 
 # get name of deployed pods
 kubectl get deploy -n pipeline
+
+# list ingress-nginx
+kubectl get svc -n ingress-nginx
 
 # check pipeline server logs 
 kubectl logs -f deploy/pipeline -n pipeline

@@ -148,7 +148,7 @@ configmap:
         s3:
           rawPlusBucketSuffix: raw-plus
         secretsManager:
-          apiKeysSecretName: my-apikeys
+          apiKeysSecretName: idata-apikeys
           redshiftSecretName: na
           snowflakeSecretName: na
         elasticMapReduce:
