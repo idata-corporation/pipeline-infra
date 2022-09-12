@@ -8,7 +8,7 @@ image:
   repository: 116279234263.dkr.ecr.us-east-1.amazonaws.com/pipeline-ui-monitoring
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "05afc631fe56583d42d3e6196106c84caf1476bc"
+  tag: "6870ae4bcd0710fc43c3d88d348223ea349d3708"
 
 ingress:
   enabled: true
@@ -43,7 +43,7 @@ resources:
 env:
   # TODO - change this value to your host
   REACT_APP_API_GATEWAY_ENDPOINT: https://pipeline.poc.idatadev.cloud
-  REACT_APP_COGNITO_USER_APP_CLIENT_ID: NA
-  REACT_APP_COGNITO_USER_POOL_ID: NA
   REACT_APP_X_API_KEY: 1847626a-5b46-4d43-827c-25f323d9201b
   REACT_APP_REQUIRE_LOGIN: "false"
+  REACT_APP_COGNITO_USER_APP_CLIENT_ID: NA
+  REACT_APP_COGNITO_USER_POOL_ID: NA
