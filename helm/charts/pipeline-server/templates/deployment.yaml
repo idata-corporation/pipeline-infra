@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "pipeline.fullname" . }}
+  name: {{ include "pipeline-server.fullname" . }}
   labels:
-    {{- include "pipeline.labels" . | nindent 4 }}
+    {{- include "pipeline-server.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "pipeline.selectorLabels" . | nindent 6 }}
+      {{- include "pipeline-server.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,13 +18,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "pipeline.selectorLabels" . | nindent 8 }}
+        {{- include "pipeline-server.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "pipeline.serviceAccountName" . }}
+      serviceAccountName: {{ include "pipeline-server.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
