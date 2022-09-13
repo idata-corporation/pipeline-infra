@@ -81,12 +81,12 @@ helm upgrade -i ingress-nginx ingress-nginx/ingress-nginx -f ./values/ingress-ng
 ```
 
 ## Configure & Install the Pipeline Server
-- Edit the ./pipeline-infra/helm/values/pipeline/idata-poc/values.yaml file
+- Edit the ./pipeline-infra/helm/values/pipeline-server/idata-poc/values.yaml file
 - Change the values tagged with TODO accordingly
 
 ```
 Change directories to ./pipeline-infra/helm
-helm upgrade -i pipeline ./charts/pipeline -f ./values/pipeline/idata-poc/values.yaml -n pipeline
+helm upgrade -i pipeline ./charts/pipeline-server -f ./values/pipeline-server/idata-poc/values.yaml -n pipeline
 ```
 
 ## Configure & Install the Pipeline UI
@@ -119,10 +119,10 @@ If no error, register a test dataset (stock_price)
 ## Additional Commands
 ```
 # uninstall pipeline server
-helm delete pipeline -n pipeline
+helm delete pipeline-server -n pipeline
 
 # uninstall pipeline ui
-helm delete ui -n pipeline
+helm delete pipeline-ui -n pipeline
 
 # login to eks
 aws eks update-kubeconfig --name idata-poc
