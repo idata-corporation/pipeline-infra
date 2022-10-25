@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: 116279234263.dkr.ecr.us-east-1.amazonaws.com/pipeline-ui-monitoring
+  repository: 709825985650.dkr.ecr.us-east-1.amazonaws.com/idata-corporation/pipeline-ui
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "8f76f391ce6e2e657e06ac7ebc7103c9939f415c"
+  tag: "8f76f3-amd64"
 
 ingress:
   enabled: true

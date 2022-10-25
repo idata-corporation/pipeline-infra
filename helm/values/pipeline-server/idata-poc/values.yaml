@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: 116279234263.dkr.ecr.us-east-1.amazonaws.com/pipelineserver
+  repository: 709825985650.dkr.ecr.us-east-1.amazonaws.com/idata-corporation/pipeline-server
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0f277509f399a55e2baa0b08a0de0e96e90fdef4"
+  tag: "0f2775-amd64"
 
 imagePullSecrets: []
 nameOverride: ""
